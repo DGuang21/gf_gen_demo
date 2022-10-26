@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "helloworld/api/helloworld/v1;v1";
+
+// 这里可以相当于是一个入口的路由，比方说是/user下的接口都在这里定义
+service User {
+
+  rpc UserSignIn (SignInRequest) returns (UserSignResponse) {
+    option (google.api.http) = {
+      get: "/sign_in"
+    };
+  }
+
+  rpc UserProfile (UserProfileRequest) returns (UserProfileResponse) {
+    option (google.api.http) = {
+      get: "/profile"
+    };
+  }
+
+}
+
+message SignInRequest {
+  string name = 1;
+  string password = 2;
+  string passport = 3;
+}
+
+message UserSignResponse {
+
+}
+
+message UserProfileRequest {
+  string name = 1;
+}
+
+message UserProfileResponse {
+  string name = 1;
+  string email = 2;
+  string phone = 3;
+}
