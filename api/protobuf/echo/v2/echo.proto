@@ -2,17 +2,18 @@
 
 syntax = "proto3";
 
-package proto.v1;
+package proto.v2;
 
-option go_package = "/echo/v1";
+option go_package = "/echo/v2";
 
 service Echo{
+    // Echo returns the same message it receives.
     rpc Say(SayReq) returns (SayRes) {}
 }
 
 message SayReq {
     // 提交内容
-    // v:  required|max:64
+    //
     // eg: hello world
     string content = 1 [json_name = "content"];
 }

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: user/v1/user.proto
+// source: user/v1/user.v1.proto
 
 package v1
 
@@ -22,9 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	// 用户注册接口
 	UserSignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*UserSignResponse, error)
-	// 查看用户信息接口
 	UserProfile(ctx context.Context, in *UserProfileRequest, opts ...grpc.CallOption) (*UserProfileResponse, error)
 }
 
@@ -58,9 +56,7 @@ func (c *userClient) UserProfile(ctx context.Context, in *UserProfileRequest, op
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	// 用户注册接口
 	UserSignIn(context.Context, *SignInRequest) (*UserSignResponse, error)
-	// 查看用户信息接口
 	UserProfile(context.Context, *UserProfileRequest) (*UserProfileResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -141,5 +137,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user/v1/user.proto",
+	Metadata: "user/v1/user.v1.proto",
 }

@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: user/v1/user.proto
+// source: user/v2/user.v2.proto
 
-package v1
+package v2
 
 import (
 	context "context"
@@ -22,9 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	// 用户注册接口
 	UserSignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*UserSignResponse, error)
-	// 查看用户信息接口
 	UserProfile(ctx context.Context, in *UserProfileRequest, opts ...grpc.CallOption) (*UserProfileResponse, error)
 }
 
@@ -38,7 +36,7 @@ func NewUserClient(cc grpc.ClientConnInterface) UserClient {
 
 func (c *userClient) UserSignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*UserSignResponse, error) {
 	out := new(UserSignResponse)
-	err := c.cc.Invoke(ctx, "/user.v1.User/UserSignIn", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.v2.User/UserSignIn", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +45,7 @@ func (c *userClient) UserSignIn(ctx context.Context, in *SignInRequest, opts ...
 
 func (c *userClient) UserProfile(ctx context.Context, in *UserProfileRequest, opts ...grpc.CallOption) (*UserProfileResponse, error) {
 	out := new(UserProfileResponse)
-	err := c.cc.Invoke(ctx, "/user.v1.User/UserProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/user.v2.User/UserProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,9 +56,7 @@ func (c *userClient) UserProfile(ctx context.Context, in *UserProfileRequest, op
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	// 用户注册接口
 	UserSignIn(context.Context, *SignInRequest) (*UserSignResponse, error)
-	// 查看用户信息接口
 	UserProfile(context.Context, *UserProfileRequest) (*UserProfileResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
@@ -98,7 +94,7 @@ func _User_UserSignIn_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.v1.User/UserSignIn",
+		FullMethod: "/user.v2.User/UserSignIn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UserSignIn(ctx, req.(*SignInRequest))
@@ -116,7 +112,7 @@ func _User_UserProfile_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.v1.User/UserProfile",
+		FullMethod: "/user.v2.User/UserProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServer).UserProfile(ctx, req.(*UserProfileRequest))
@@ -128,7 +124,7 @@ func _User_UserProfile_Handler(srv interface{}, ctx context.Context, dec func(in
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var User_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.v1.User",
+	ServiceName: "user.v2.User",
 	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -141,5 +137,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user/v1/user.proto",
+	Metadata: "user/v2/user.v2.proto",
 }

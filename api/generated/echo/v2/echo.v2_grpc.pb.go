@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: echo/v1/echo.v1.proto
+// source: echo/v2/echo.v2.proto
 
-package v1
+package v2
 
 import (
 	context "context"
@@ -35,7 +35,7 @@ func NewEchoClient(cc grpc.ClientConnInterface) EchoClient {
 
 func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error) {
 	out := new(SayRes)
-	err := c.cc.Invoke(ctx, "/proto.v1.Echo/Say", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v2.Echo/Say", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.v1.Echo/Say",
+		FullMethod: "/proto.v2.Echo/Say",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EchoServer).Say(ctx, req.(*SayReq))
@@ -92,7 +92,7 @@ func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Echo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.v1.Echo",
+	ServiceName: "proto.v2.Echo",
 	HandlerType: (*EchoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var Echo_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "echo/v1/echo.v1.proto",
+	Metadata: "echo/v2/echo.v2.proto",
 }

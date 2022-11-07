@@ -84,10 +84,11 @@ deploy:
 .PHONY: api
 # generate api proto
 api:
-	protoc --proto_path=./api \
+	protoc --proto_path=./api/protobuf/ \
 	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./api \
- 	       --go-grpc_out=paths=source_relative:./api \
+ 	       --go_out=paths=source_relative:./api/generated/ \
+ 	       --go-grpc_out=paths=source_relative:./api/generated/ \
+ 	       --go-http_out=paths=source_relative:./api/generated/ \
 	       $(API_PROTO_FILES)
 
 .PHONY: generate

@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.5
-// source: echo/v1/echo.v1.proto
+// source: echo/v2/echo.proto
 
-package v1
+package v2
 
 import (
 	context "context"
@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EchoClient interface {
+	// Echo returns the same message it receives.
 	Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error)
 }
 
@@ -35,7 +36,7 @@ func NewEchoClient(cc grpc.ClientConnInterface) EchoClient {
 
 func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error) {
 	out := new(SayRes)
-	err := c.cc.Invoke(ctx, "/proto.v1.Echo/Say", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.v2.Echo/Say", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,6 +47,7 @@ func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOptio
 // All implementations must embed UnimplementedEchoServer
 // for forward compatibility
 type EchoServer interface {
+	// Echo returns the same message it receives.
 	Say(context.Context, *SayReq) (*SayRes, error)
 	mustEmbedUnimplementedEchoServer()
 }
@@ -80,7 +82,7 @@ func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.v1.Echo/Say",
+		FullMethod: "/proto.v2.Echo/Say",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EchoServer).Say(ctx, req.(*SayReq))
@@ -92,7 +94,7 @@ func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Echo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.v1.Echo",
+	ServiceName: "proto.v2.Echo",
 	HandlerType: (*EchoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +103,5 @@ var Echo_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "echo/v1/echo.v1.proto",
+	Metadata: "echo/v2/echo.proto",
 }

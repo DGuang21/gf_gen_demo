@@ -4,17 +4,19 @@ package user.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "helloworld/api/helloworld/v1;v1";
+option go_package = "hello_gf/generated/user/v1;v1";
 
 // 这里可以相当于是一个入口的路由，比方说是/user下的接口都在这里定义
 service User {
 
+  // 用户注册接口
   rpc UserSignIn (SignInRequest) returns (UserSignResponse) {
     option (google.api.http) = {
       get: "/sign_in"
     };
   }
 
+  // 查看用户信息接口
   rpc UserProfile (UserProfileRequest) returns (UserProfileResponse) {
     option (google.api.http) = {
       get: "/profile"
@@ -23,11 +25,12 @@ service User {
 
 }
 
+// message: sign in request
 message SignInRequest {
   // 定义openapi的注释，在生成完代码后，会根据引入的插件自动生成相应的api文档以及注释
-  string name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {description: "变异ID"}];
+  string name = 1;
   // 校验参数，这个已经不太方便直接替换到新的结构体里面了，所以下文是用了map来管理
-  string password = 2 [(validate.rules).int64 = {gt: 0}];
+  string password = 2;
   string passport = 3;
 }
 
