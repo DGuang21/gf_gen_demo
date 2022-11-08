@@ -18,6 +18,7 @@ var (
 )
 
 type Echo struct {
+	impl EchoImpl
 }
 
 // SayReq
@@ -39,6 +40,26 @@ type SayRes struct {
 	Content string
 }
 
-func (Echo) Say(ctx context.Context, req *SayReq) (res *SayRes, err error) {
-	return
+// 只要在logic层或者service层实现了EchoImpl接口，就可以自动绑定到路由上
+type EchoImpl interface {
+	Say(ctx context.Context, req *SayReq) (res *SayRes, err error)
+}
+
+// 这里其实就是连接了路由和实现的地方
+func (echo Echo) Say(ctx context.Context, req *SayReq) (res *SayRes, err error) {
+	return echo.impl.Say(ctx, req)
+}
+
+func NewEcho(impl EchoImpl) Echo {
+	return Echo{impl: impl}
+}
+
+func aaa() {
+	s := g.Server()
+	s.Use(ghttp.MiddlewareHandlerResponse)
+	s.Group("/", func(group *ghttp.RouterGroup) {
+		group.Bind(
+			NewEcho(nil),
+		)
+	})
 }
