@@ -1,13 +1,18 @@
-// protoc --go_out=plugins=grpc:. *.proto
-
 syntax = "proto3";
 
 package proto.v1;
 
 option go_package = "/echo/v1";
 
+import "google/api/annotations.proto";
+
 service Echo{
-    rpc Say(SayReq) returns (SayRes) {}
+    rpc Say(SayReq) returns (SayRes) {
+        option(google.api.http) = {
+            post: "/v1/echo/say"
+            body: "*"
+        };
+    }
 }
 
 message SayReq {
@@ -34,6 +39,7 @@ message SayReq {
     // uint64
     // eg: 0
     // v: required
+    // json: uint64_data
     int64 uint64_data = 9;
 }
 

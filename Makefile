@@ -86,9 +86,9 @@ deploy:
 api:
 	protoc --proto_path=./api/protobuf/ \
 	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./api/generated/ \
- 	       --go-grpc_out=paths=source_relative:./api/generated/ \
- 	       --go-http_out=paths=source_relative:./api/generated/ \
+ 	       --go_out=paths=source_relative:./api/generated/grpc/ \
+ 	       --go-grpc_out=paths=source_relative:./api/generated/grpc/ \
+ 	       --go-ghttp_out=paths=source_relative:./api/generated/ghttp/ \
 	       $(API_PROTO_FILES)
 
 .PHONY: generate
