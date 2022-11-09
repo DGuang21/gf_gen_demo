@@ -40,8 +40,8 @@ type SayRes struct {
 	Content string
 }
 
-func (Echo) Say(ctx context.Context, req *SayReq) (res *SayRes, err error) {
-	return
+func (Echo Echo) Say(ctx context.Context, req *SayReq) (res *SayRes, err error) {
+	return Echo.impl.Say(ctx, req)
 }
 
 func NewEcho(impl EchoImpl) Echo {

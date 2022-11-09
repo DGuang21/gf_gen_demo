@@ -33,8 +33,8 @@ type SignInRequest struct {
 type UserSignResponse struct {
 }
 
-func (User) UserSignIn(ctx context.Context, req *SignInRequest) (res *UserSignResponse, err error) {
-	return
+func (User User) UserSignIn(ctx context.Context, req *SignInRequest) (res *UserSignResponse, err error) {
+	return User.impl.Say(ctx, req)
 }
 
 func NewUser(impl UserImpl) User {
@@ -54,8 +54,12 @@ type UserProfileResponse struct {
 	Phone string
 }
 
-func (User) UserProfile(ctx context.Context, req *UserProfileRequest) (res *UserProfileResponse, err error) {
-	return
+func (User User) UserProfile(ctx context.Context, req *UserProfileRequest) (res *UserProfileResponse, err error) {
+	return User.impl.Say(ctx, req)
+}
+
+func NewUser(impl UserImpl) User {
+	return User{impl: impl}
 }
 
 type UserImpl interface {
