@@ -2,18 +2,22 @@ package controller
 
 import (
 	"context"
-	"fmt"
-
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/os/gcmd"
-	v1 "hello_gf/api/generated/echo"
+
+	v12 "hello_gf/api/generated/http/echo/v1"
+	"hello_gf/internal/consts"
+	"hello_gf/internal/service"
 )
 
-type User struct{}
+// 用户管理
+var User = cUser{}
 
-// Say implements the protobuf.EchoServer interface.
-func (c *User) Say(ctx context.Context, r *v1.SayReq) (*v1.SayRes, error) {
-	g.Log().Print(ctx, "Received:", r.Content)
-	text := fmt.Sprintf(`%s: > %s`, gcmd.GetOpt("node", "default"), r.Content)
-	return &v1.SayRes{Content: text}, nil
+type cUser struct{}
+
+func (c cUser) Say(ctx context.Context, req *v12.SayReq) (res *v12.SayRes, err error) {
+	if err = service.User().Logout(ctx); err != nil {
+		return
+	}
+	g.RequestFromCtx(ctx).Response.RedirectTo(consts.UserLoginUrl)
+	return
 }

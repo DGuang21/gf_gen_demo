@@ -88,7 +88,7 @@ api:
 	       --proto_path=./third_party \
  	       --go_out=paths=source_relative:./api/generated/grpc/ \
  	       --go-grpc_out=paths=source_relative:./api/generated/grpc/ \
- 	       --go-ghttp_out=paths=source_relative:./api/generated/ghttp/ \
+ 	       --go-ghttp_out=paths=source_relative:./api/generated/http/ \
 	       $(API_PROTO_FILES)
 
 .PHONY: generate
