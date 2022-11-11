@@ -48,7 +48,7 @@ var (
 				//service.Middleware().Ctx,
 				//service.Middleware().ResponseHandler,
 				)
-				group.Bind(v1.NewEcho(controller.User))
+				group.Bind(v1.NewEchoApi(controller.User))
 
 			})
 			// 启动Http Server
