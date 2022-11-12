@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// SayReq is the request message for the Echo.Say method.
 type SayReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -148,6 +149,7 @@ func (x *SayReq) GetUint64Data() int64 {
 	return 0
 }
 
+// SayRes is the response message for the Echo.Say method.
 type SayRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

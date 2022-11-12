@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EchoClient interface {
+	// Echo returns the same message it receives.
 	Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error)
 }
 
@@ -46,6 +47,7 @@ func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOptio
 // All implementations must embed UnimplementedEchoServer
 // for forward compatibility
 type EchoServer interface {
+	// Echo returns the same message it receives.
 	Say(context.Context, *SayReq) (*SayRes, error)
 	mustEmbedUnimplementedEchoServer()
 }

@@ -14,22 +14,22 @@ import (
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
-var _ = context.Background()
 var _ = g.Meta{}
+var _ = gerr.Error{}
+var _ = context.Background()
 var notImplErrorCode = gcode.New(-1, "", nil)
+var _ = notImplErrorCode
 
+// UnimplementedEchoServer
 type UnimplementedEchoServer struct {
 	impl EchoImpl
 }
 
+// NewEchoApi is an entry that must be implemented.
 func NewEchoApi(impl EchoImpl) UnimplementedEchoServer {
 	return UnimplementedEchoServer{impl: impl}
 }
 
-func (Echo UnimplementedEchoServer) Say(ctx context.Context, req *SayReq) (*SayRes, error) {
-	return nil, gerr.NewCode(notImplErrorCode, "Method Say not implemented.")
-}
-
+// EchoImpl is the server API for Echo service.
 type EchoImpl interface {
-	Say(ctx context.Context, req *SayReq) (*SayRes, error)
 }

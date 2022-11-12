@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EchoClient interface {
 	// Echo returns the same message it receives.
-	Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error)
+	Say(ctx context.Context, in *SayIn, opts ...grpc.CallOption) (*SayOut, error)
 }
 
 type echoClient struct {
@@ -34,8 +34,8 @@ func NewEchoClient(cc grpc.ClientConnInterface) EchoClient {
 	return &echoClient{cc}
 }
 
-func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayRes, error) {
-	out := new(SayRes)
+func (c *echoClient) Say(ctx context.Context, in *SayIn, opts ...grpc.CallOption) (*SayOut, error) {
+	out := new(SayOut)
 	err := c.cc.Invoke(ctx, "/proto.v2.Echo/Say", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (c *echoClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOptio
 // for forward compatibility
 type EchoServer interface {
 	// Echo returns the same message it receives.
-	Say(context.Context, *SayReq) (*SayRes, error)
+	Say(context.Context, *SayIn) (*SayOut, error)
 	mustEmbedUnimplementedEchoServer()
 }
 
@@ -56,7 +56,7 @@ type EchoServer interface {
 type UnimplementedEchoServer struct {
 }
 
-func (UnimplementedEchoServer) Say(context.Context, *SayReq) (*SayRes, error) {
+func (UnimplementedEchoServer) Say(context.Context, *SayIn) (*SayOut, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Say not implemented")
 }
 func (UnimplementedEchoServer) mustEmbedUnimplementedEchoServer() {}
@@ -73,7 +73,7 @@ func RegisterEchoServer(s grpc.ServiceRegistrar, srv EchoServer) {
 }
 
 func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SayReq)
+	in := new(SayIn)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func _Echo_Say_Handler(srv interface{}, ctx context.Context, dec func(interface{
 		FullMethod: "/proto.v2.Echo/Say",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EchoServer).Say(ctx, req.(*SayReq))
+		return srv.(EchoServer).Say(ctx, req.(*SayIn))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -6,7 +6,9 @@ option go_package = "/echo/v1";
 
 import "google/api/annotations.proto";
 
+// EchoService is a service that implements the Echo API.
 service Echo{
+    // Echo returns the same message it receives.
     rpc Say(SayReq) returns (SayRes) {
         option(google.api.http) = {
             post: "/v1/echo/say"
@@ -15,6 +17,7 @@ service Echo{
     }
 }
 
+// SayReq is the request message for the Echo.Say method.
 message SayReq {
     // 提交内容
     // v:  required|max:64
@@ -43,6 +46,7 @@ message SayReq {
     int64 uint64_data = 9;
 }
 
+// SayRes is the response message for the Echo.Say method.
 message SayRes {
     string content = 1;
 }

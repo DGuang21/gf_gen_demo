@@ -1,5 +1,3 @@
-// protoc --go_out=plugins=grpc:. *.proto
-
 syntax = "proto3";
 
 package proto.v2;
@@ -8,17 +6,17 @@ option go_package = "/echo/v2";
 
 service Echo{
     // Echo returns the same message it receives.
-    rpc Say(SayReq) returns (SayRes) {}
+    rpc Say(SayIn) returns (SayOut) {}
 }
 
-message SayReq {
+message SayIn {
     // 提交内容
     //
     // eg: hello world
     string content = 1 [json_name = "content"];
 }
 
-message SayRes {
+message SayOut {
     string content = 1;
 }
 

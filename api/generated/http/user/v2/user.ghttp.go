@@ -14,59 +14,59 @@ import (
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
-var _ = context.Background()
 var _ = g.Meta{}
+var _ = gerr.Error{}
+var _ = context.Background()
 var notImplErrorCode = gcode.New(-1, "", nil)
+var _ = notImplErrorCode
 
+// UnimplementedUserServer
 type UnimplementedUserServer struct {
 	impl UserImpl
 }
 
+// NewUserApi is an entry that must be implemented.
 func NewUserApi(impl UserImpl) UnimplementedUserServer {
 	return UnimplementedUserServer{impl: impl}
 }
 
-// UserSignIn SignInRequest
+// SignInRequest
 type SignInRequest struct {
-	g.Meta `path:"GET" method:"/sign_in"`
-
-	Name string // 定义openapi的注释，在生成完代码后，会根据引入的插件自动生成相应的api文档以及注释
-
+	g.Meta   `path:"GET" method:"/sign_in"`
+	Name     string // 定义openapi的注释，在生成完代码后，会根据引入的插件自动生成相应的api文档以及注释
 	Password string // 校验参数，这个已经不太方便直接替换到新的结构体里面了，所以下文是用了map来管理
-
 	Passport string
 }
 
-// UserSignIn UserSignResponse
+// UserSignResponse
 type UserSignResponse struct {
 }
 
+// UserSignIn
 func (User UnimplementedUserServer) UserSignIn(ctx context.Context, req *SignInRequest) (*UserSignResponse, error) {
 	return nil, gerr.NewCode(notImplErrorCode, "Method UserSignIn not implemented.")
 }
 
-// UserProfile UserProfileRequest
+// UserProfileRequest
 type UserProfileRequest struct {
 	g.Meta `path:"GET" method:"/profile"`
-
-	Name string
+	Name   string
 }
 
-// UserProfile UserProfileResponse
+// UserProfileResponse
 type UserProfileResponse struct {
-	Name string
-
+	Name  string
 	Email string
-
 	Phone string
 }
 
+// UserProfile
 func (User UnimplementedUserServer) UserProfile(ctx context.Context, req *UserProfileRequest) (*UserProfileResponse, error) {
 	return nil, gerr.NewCode(notImplErrorCode, "Method UserProfile not implemented.")
 }
 
+// UserImpl is the server API for User service.
 type UserImpl interface {
 	UserSignIn(ctx context.Context, req *SignInRequest) (*UserSignResponse, error)
-
 	UserProfile(ctx context.Context, req *UserProfileRequest) (*UserProfileResponse, error)
 }
