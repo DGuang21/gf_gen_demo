@@ -32,7 +32,7 @@ func NewUserApi(impl UserImpl) UnimplementedUserServer {
 
 // SignInRequest
 type SignInRequest struct {
-	g.Meta   `path:"GET" method:"/sign_in"`
+	g.Meta   `path:"/sign_in" method:"GET"`
 	Name     string // 定义openapi的注释，在生成完代码后，会根据引入的插件自动生成相应的api文档以及注释
 	Password string // 校验参数，这个已经不太方便直接替换到新的结构体里面了，所以下文是用了map来管理
 	Passport string
@@ -49,7 +49,7 @@ func (User UnimplementedUserServer) UserSignIn(ctx context.Context, req *SignInR
 
 // UserProfileRequest
 type UserProfileRequest struct {
-	g.Meta `path:"GET" method:"/profile"`
+	g.Meta `path:"/profile" method:"GET"`
 	Name   string
 }
 

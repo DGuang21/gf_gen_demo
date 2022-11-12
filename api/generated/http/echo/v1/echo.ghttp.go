@@ -32,7 +32,7 @@ func NewEchoApi(impl EchoImpl) UnimplementedEchoServer {
 
 // SayReq  SayReq is the request message for the Echo.Say method.
 type SayReq struct {
-	g.Meta     `path:"POST" method:"/v1/echo/say"`
+	g.Meta     `path:"/v1/echo/say" method:"POST"`
 	Content    string             `v:"required|max:64" d:"hello world" ` // 提交内容
 	Nickname   string             // only comment,not rule
 	Sex        string             // tail comment

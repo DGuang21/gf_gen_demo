@@ -5,11 +5,9 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
-	"github.com/gogf/gf/v2/protocol/goai"
 	"github.com/gogf/gf/v2/util/gmode"
 
 	v1 "hello_gf/api/generated/http/echo/v1"
-	"hello_gf/internal/consts"
 	"hello_gf/internal/controller"
 )
 
@@ -67,21 +65,4 @@ func enhanceOpenAPIDoc(s *ghttp.Server) {
 	openapi.Info.Title = `Focus Project`
 	openapi.Info.Description = ``
 
-	// Sort the tags in custom sequence.
-	openapi.Tags = &goai.Tags{
-		{Name: consts.OpenAPITagNameIndex},
-		{Name: consts.OpenAPITagNameLogin},
-		{Name: consts.OpenAPITagNameRegister},
-		{Name: consts.OpenAPITagNameArticle},
-		{Name: consts.OpenAPITagNameTopic},
-		{Name: consts.OpenAPITagNameAsk},
-		{Name: consts.OpenAPITagNameReply},
-		{Name: consts.OpenAPITagNameContent},
-		{Name: consts.OpenAPITagNameSearch},
-		{Name: consts.OpenAPITagNameInteract},
-		{Name: consts.OpenAPITagNameCategory},
-		{Name: consts.OpenAPITagNameProfile},
-		{Name: consts.OpenAPITagNameUser},
-		{Name: consts.OpenAPITagNameMess},
-	}
 }
