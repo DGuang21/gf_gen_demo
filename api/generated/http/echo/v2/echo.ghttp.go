@@ -8,25 +8,19 @@ package v2
 
 import (
 	context "context"
-
-	gcode "github.com/gogf/gf/v2/errors/gcode"
-	gerr "github.com/gogf/gf/v2/errors/gerror"
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
 var _ = g.Meta{}
-var _ = gerr.Error{}
 var _ = context.Background()
-var notImplErrorCode = gcode.New(-1, "", nil)
-var _ = notImplErrorCode
 
 // UnimplementedEchoServer
 type UnimplementedEchoServer struct {
 	impl EchoImpl
 }
 
-// NewEchoApi is an entry that must be implemented.
-func NewEchoApi(impl EchoImpl) UnimplementedEchoServer {
+// RegisterEchoServer is an entry that must be implemented.
+func RegisterEchoServer(impl EchoImpl) UnimplementedEchoServer {
 	return UnimplementedEchoServer{impl: impl}
 }
 

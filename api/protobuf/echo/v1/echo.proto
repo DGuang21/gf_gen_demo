@@ -20,20 +20,17 @@ service Echo{
 // SayReq is the request message for the Echo.Say method.
 message SayReq {
     // 提交内容
-    // v:  required|max:64
+    // v:  required
     // eg: hello world
     string content = 1;
     // only comment,not rule
     string nickname = 2;
     string sex = 3; // tail comment
     // 结构体调用
-    // eg: nil
     SayRes data = 4;
     // map 调用
-    // eg: nil
     map<string, SayRes> map_data = 5;
     // 数组调用
-    // eg: nil
     repeated SayRes array_data = 6;
     // int
     repeated int32 int_data = 7;

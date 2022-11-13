@@ -8,14 +8,8 @@ package entity
 
 import (
 	context "context"
-
-	gcode "github.com/gogf/gf/v2/errors/gcode"
-	gerr "github.com/gogf/gf/v2/errors/gerror"
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
 var _ = g.Meta{}
-var _ = gerr.Error{}
 var _ = context.Background()
-var notImplErrorCode = gcode.New(-1, "", nil)
-var _ = notImplErrorCode

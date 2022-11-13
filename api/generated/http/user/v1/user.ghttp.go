@@ -8,25 +8,19 @@ package v1
 
 import (
 	context "context"
-
-	gcode "github.com/gogf/gf/v2/errors/gcode"
-	gerr "github.com/gogf/gf/v2/errors/gerror"
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
 var _ = g.Meta{}
-var _ = gerr.Error{}
 var _ = context.Background()
-var notImplErrorCode = gcode.New(-1, "", nil)
-var _ = notImplErrorCode
 
 // UnimplementedUserServer
 type UnimplementedUserServer struct {
 	impl UserImpl
 }
 
-// NewUserApi is an entry that must be implemented.
-func NewUserApi(impl UserImpl) UnimplementedUserServer {
+// RegisterUserServer is an entry that must be implemented.
+func RegisterUserServer(impl UserImpl) UnimplementedUserServer {
 	return UnimplementedUserServer{impl: impl}
 }
 
@@ -44,7 +38,11 @@ type UserSignResponse struct {
 
 // UserSignIn  用户注册接口
 func (User UnimplementedUserServer) UserSignIn(ctx context.Context, req *SignInRequest) (*UserSignResponse, error) {
-	return nil, gerr.NewCode(notImplErrorCode, "Method UserSignIn not implemented.")
+	// 这个ctx key需要放到gf的常量中去
+	ctx = context.WithValue(ctx, "ctx_http_pattern", "/sign_in")
+	ctx = context.WithValue(ctx, "ctx_http_method", "GET")
+	ctx = context.WithValue(ctx, "ctx_grpc_pattern", "/user.v1.User/UserSignIn")
+	return User.impl.UserSignIn(ctx, req)
 }
 
 // UserProfileRequest
@@ -62,7 +60,11 @@ type UserProfileResponse struct {
 
 // UserProfile  查看用户信息接口
 func (User UnimplementedUserServer) UserProfile(ctx context.Context, req *UserProfileRequest) (*UserProfileResponse, error) {
-	return nil, gerr.NewCode(notImplErrorCode, "Method UserProfile not implemented.")
+	// 这个ctx key需要放到gf的常量中去
+	ctx = context.WithValue(ctx, "ctx_http_pattern", "/profile")
+	ctx = context.WithValue(ctx, "ctx_http_method", "GET")
+	ctx = context.WithValue(ctx, "ctx_grpc_pattern", "/user.v1.User/UserProfile")
+	return User.impl.UserProfile(ctx, req)
 }
 
 // UserImpl is the server API for User service.

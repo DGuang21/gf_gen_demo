@@ -28,20 +28,17 @@ type SayReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// 提交内容
-	// v:  required|max:64
+	// v:  required
 	// eg: hello world
 	Content string `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
 	// only comment,not rule
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Sex      string `protobuf:"bytes,3,opt,name=sex,proto3" json:"sex,omitempty"` // tail comment
 	// 结构体调用
-	// eg: nil
 	Data *SayRes `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
 	// map 调用
-	// eg: nil
 	MapData map[string]*SayRes `protobuf:"bytes,5,rep,name=map_data,json=mapData,proto3" json:"map_data,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// 数组调用
-	// eg: nil
 	ArrayData []*SayRes `protobuf:"bytes,6,rep,name=array_data,json=arrayData,proto3" json:"array_data,omitempty"`
 	// int
 	IntData []int32 `protobuf:"varint,7,rep,packed,name=int_data,json=intData,proto3" json:"int_data,omitempty"`

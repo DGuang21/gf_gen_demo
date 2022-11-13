@@ -9,6 +9,7 @@ import (
 
 	v1 "hello_gf/api/generated/http/echo/v1"
 	"hello_gf/internal/controller"
+	"hello_gf/internal/service"
 )
 
 var (
@@ -43,10 +44,10 @@ var (
 
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
-				//service.Middleware().Ctx,
-				//service.Middleware().ResponseHandler,
+					service.Middleware().Ctx,
+					service.Middleware().ResponseHandler,
 				)
-				group.Bind(v1.NewEchoApi(controller.User))
+				group.Bind(v1.RegisterEchoServer(controller.User))
 
 			})
 			// 启动Http Server

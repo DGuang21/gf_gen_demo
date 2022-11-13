@@ -8,37 +8,31 @@ package v1
 
 import (
 	context "context"
-
-	gcode "github.com/gogf/gf/v2/errors/gcode"
-	gerr "github.com/gogf/gf/v2/errors/gerror"
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
 var _ = g.Meta{}
-var _ = gerr.Error{}
 var _ = context.Background()
-var notImplErrorCode = gcode.New(-1, "", nil)
-var _ = notImplErrorCode
 
 // UnimplementedEchoServer
 type UnimplementedEchoServer struct {
 	impl EchoImpl
 }
 
-// NewEchoApi is an entry that must be implemented.
-func NewEchoApi(impl EchoImpl) UnimplementedEchoServer {
+// RegisterEchoServer is an entry that must be implemented.
+func RegisterEchoServer(impl EchoImpl) UnimplementedEchoServer {
 	return UnimplementedEchoServer{impl: impl}
 }
 
 // SayReq  SayReq is the request message for the Echo.Say method.
 type SayReq struct {
 	g.Meta     `path:"/v1/echo/say" method:"POST"`
-	Content    string             `v:"required|max:64" d:"hello world" ` // 提交内容
+	Content    string             `v:"required" d:"hello world" ` // 提交内容
 	Nickname   string             // only comment,not rule
 	Sex        string             // tail comment
-	Data       *SayRes            `d:"nil" ` // 结构体调用
-	MapData    map[string]*SayRes `d:"nil" ` // map 调用
-	ArrayData  []*SayRes          `d:"nil" ` // 数组调用
+	Data       *SayRes            // 结构体调用
+	MapData    map[string]*SayRes // map 调用
+	ArrayData  []*SayRes          // 数组调用
 	IntData    int32              // int
 	Uint32Data uint32             // uint32
 	Uint64Data int64              `d:"0" v:"required" json:"uint64_data" ` // uint64
@@ -51,7 +45,11 @@ type SayRes struct {
 
 // Say  Echo returns the same message it receives.
 func (Echo UnimplementedEchoServer) Say(ctx context.Context, req *SayReq) (*SayRes, error) {
-	return nil, gerr.NewCode(notImplErrorCode, "Method Say not implemented.")
+	// 这个ctx key需要放到gf的常量中去
+	ctx = context.WithValue(ctx, "ctx_http_pattern", "/v1/echo/say")
+	ctx = context.WithValue(ctx, "ctx_http_method", "POST")
+	ctx = context.WithValue(ctx, "ctx_grpc_pattern", "/proto.v1.Echo/Say")
+	return Echo.impl.Say(ctx, req)
 }
 
 // EchoImpl is the server API for Echo service.
