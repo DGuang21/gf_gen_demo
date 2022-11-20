@@ -11,8 +11,8 @@ import (
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
-var _ = g.Meta{}
 var _ = context.Background()
+var _ = g.Meta{}
 
 // UnimplementedEchoServer
 type UnimplementedEchoServer struct {
@@ -33,8 +33,8 @@ type SayReq struct {
 	Data       *SayRes            // 结构体调用
 	MapData    map[string]*SayRes // map 调用
 	ArrayData  []*SayRes          // 数组调用
-	IntData    int32              // int
-	Uint32Data uint32             // uint32
+	IntData    []int32            // int
+	Uint32Data []uint32           // uint32
 	Uint64Data int64              `d:"0" v:"required" json:"uint64_data" ` // uint64
 }
 

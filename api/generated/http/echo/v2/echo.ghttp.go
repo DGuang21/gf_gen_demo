@@ -9,10 +9,11 @@ package v2
 import (
 	context "context"
 	g "github.com/gogf/gf/v2/frame/g"
+	v1 "hello_gf/api/generated/http/echo/v1"
 )
 
-var _ = g.Meta{}
 var _ = context.Background()
+var _ = g.Meta{}
 
 // UnimplementedEchoServer
 type UnimplementedEchoServer struct {
@@ -24,6 +25,30 @@ func RegisterEchoServer(impl EchoImpl) UnimplementedEchoServer {
 	return UnimplementedEchoServer{impl: impl}
 }
 
+// SayIn
+type SayIn struct {
+	g.Meta  `path:"/v2/echo/say" method:"POST"`
+	Content string `d:"hello world" ` // 提交内容
+}
+
+// SayOut
+type SayOut struct {
+	Data    *v1.SayReq
+	Content string
+	Data2   *SayIn
+	Data3   int64
+}
+
+// Say  Echo returns the same message it receives.
+func (Echo UnimplementedEchoServer) Say(ctx context.Context, req *SayIn) (*SayOut, error) {
+	// 这个ctx key需要放到gf的常量中去
+	ctx = context.WithValue(ctx, "ctx_http_pattern", "/v2/echo/say")
+	ctx = context.WithValue(ctx, "ctx_http_method", "POST")
+	ctx = context.WithValue(ctx, "ctx_grpc_pattern", "/proto.v2.Echo/Say")
+	return Echo.impl.Say(ctx, req)
+}
+
 // EchoImpl is the server API for Echo service.
 type EchoImpl interface {
+	Say(ctx context.Context, req *SayIn) (*SayOut, error)
 }

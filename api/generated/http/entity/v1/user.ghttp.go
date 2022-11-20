@@ -11,5 +11,5 @@ import (
 	g "github.com/gogf/gf/v2/frame/g"
 )
 
-var _ = g.Meta{}
 var _ = context.Background()
+var _ = g.Meta{}

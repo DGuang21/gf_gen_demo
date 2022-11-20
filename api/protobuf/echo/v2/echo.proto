@@ -4,20 +4,29 @@ package proto.v2;
 
 option go_package = "/echo/v2";
 
+import "echo/v1/echo.proto";
+import "google/api/annotations.proto";
+
 service Echo{
-    // Echo returns the same message it receives.
-    rpc Say(SayIn) returns (SayOut) {}
+  // Echo returns the same message it receives.
+  rpc Say(SayIn) returns (SayOut) {
+    option (google.api.http) = {
+      post:"/v2/echo/say"
+      body:"*"
+    };
+  }
 }
 
 message SayIn {
-    // 提交内容
-    //
-    // eg: hello world
-    string content = 1 [json_name = "content"];
+  // 提交内容
+  //
+  // eg: hello world
+  string content = 1 [json_name = "content"];
 }
 
 message SayOut {
-    string content = 1;
+  v1.SayReq data = 1;
+  string content = 2;
+  SayIn data2 = 3;
+  int64 data3 = 4;
 }
-
-

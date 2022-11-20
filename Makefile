@@ -86,9 +86,9 @@ deploy:
 api:
 	protoc --proto_path=./api/protobuf/ \
 	       --proto_path=./third_party \
- 	       --go_out=paths=source_relative:./api/generated/grpc/ \
- 	       --go-grpc_out=paths=source_relative:./api/generated/grpc/ \
- 	       --go-ghttp_out=paths=source_relative:./api/generated/http/ \
+		   --go_out=paths=source_relative:./api/generated/grpc/ \
+		   --go-grpc_out=paths=source_relative:./api/generated/grpc/ \
+		   --go-ghttp_out=full_import_path=true,file_path=./api/generated/http/,paths=source_relative:./api/generated/http/ \
 	       $(API_PROTO_FILES)
 
 .PHONY: generate
@@ -104,3 +104,8 @@ all:
 	make api;
 	make config;
 	make generate;
+
+.PHONY: builder
+# builder
+builder:
+	cd ~/GolandProjects/gogf-gf/cmd/protoc-gen-go-ghttp/ && go build ./ && mv protoc-gen-go-ghttp ~/go/bin && cd ~/Desktop/kratos/hello_gf && make api

@@ -1,0 +1,148 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "echo/v1/echo.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Echo"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/echo/say": {
+      "post": {
+        "summary": "Echo returns the same message it receives.",
+        "operationId": "Echo_Say",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SayRes"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "SayReq is the request message for the Echo.Say method.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SayReq"
+            }
+          }
+        ],
+        "tags": [
+          "Echo"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1SayReq": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "title": "提交内容\nv:  required\neg: hello world"
+        },
+        "nickname": {
+          "type": "string",
+          "title": "only comment,not rule"
+        },
+        "sex": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1SayRes",
+          "title": "结构体调用"
+        },
+        "map_data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1SayRes"
+          },
+          "title": "map 调用"
+        },
+        "array_data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SayRes"
+          },
+          "title": "数组调用"
+        },
+        "int_data": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": "int"
+        },
+        "uint32_data": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": "uint32"
+        },
+        "uint64_data": {
+          "type": "string",
+          "format": "int64",
+          "title": "uint64\neg: 0\nv: required\njson: uint64_data"
+        }
+      },
+      "description": "SayReq is the request message for the Echo.Say method."
+    },
+    "v1SayRes": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      },
+      "description": "SayRes is the response message for the Echo.Say method."
+    }
+  }
+}
